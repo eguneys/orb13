@@ -11,14 +11,32 @@ export default function Play(ctx) {
   const bs = (() => {
     const { width, height } = canvas;
 
-    let margin = 20;
-
-
     let tileSize = 20;
+
+    let bTop = rect(
+      0, 0,
+      width,
+      tileSize * 1.5
+    );
+
+    let bBottomWidth = width,
+        bBottomHeight = tileSize * 1.5,
+        bBottomX = 0,
+        bBottomY = height - bBottomHeight,
+        bBottomArea = rect(bBottomX, bBottomY,
+                           bBottomWidth, bBottomHeight);
+
+
+    let bLeft = rect(
+      0, bTop.y1,
+      tileSize * 1.5,
+      height - bBottomHeight
+    );
+
     let disciplesWidth = width * 0.8,
         disciplesHeight = height * 0.8,
-        disciplesX = margin,
-        disciplesY = margin,
+        disciplesX = bLeft.x1,
+        disciplesY = bTop.y1,
         disciplesArea = rect(disciplesX, disciplesY, 
                              disciplesWidth, disciplesHeight);
 
@@ -28,12 +46,24 @@ export default function Play(ctx) {
         miniY = disciplesY,
         miniArea = rect(miniX, miniY, miniWidth, miniHeight);
 
+
+    let bRightWidth = miniWidth,
+        bRightHeight = height - miniY - bBottomHeight - miniHeight,
+        bRightX = miniX,
+        bRightY = miniY + miniHeight,
+        bRightArea = rect(bRightX, bRightY,
+                          bRightWidth, bRightHeight);
+
     return {
       width,
       height,
       tileSize,
       disciples: disciplesArea,
-      minimap: miniArea
+      minimap: miniArea,
+      bRight: bRightArea,
+      bTop,
+      bBottom: bBottomArea,
+      bLeft
     };
   })();
 

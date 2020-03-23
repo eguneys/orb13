@@ -28,12 +28,17 @@ const bitmaskFrames = (mFrame, x, y, sz) => {
 
 export default function makeSprites(scene, assets) {
 
-  const tilesAtlas = scene.texture(assets['tiles']);
+  const tilesAtlas = scene.texture(assets['tiles']),
+        minimapAtlas = scene.texture(assets['minimap']);
 
   const tilesFrame = makeFrame(tilesAtlas);
+  const minimapFrame = makeFrame(minimapAtlas);
 
   return {
-    'minimap': wholeFrame(scene, assets['minimap'], 128),
+    'borderTop': wholeFrame(scene, assets['bordertop'], 64 * 10, 16),
+    'borderRight': minimapFrame(176, 224, 128),
+    'borderBottom': minimapFrame(16, 352, 288, 16),
+    'minimap': minimapFrame(0, 0, 128),
     'earth': tilesFrame(0, 0, 16),
     'waterBitmask': bitmaskFrames(tilesFrame, 64, 32, 16),
     'miniFrame': tilesFrame(0, 16, 16)

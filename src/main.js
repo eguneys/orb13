@@ -14,7 +14,8 @@ export function app(element, options) {
 
   new Assets({
     'tiles': 'disciples.png',
-    'minimap': 'minimap.png'
+    'minimap': 'minimap.png',
+    'bordertop': 'disciplesBordertop.png'
   }, { assetsUrl }).start()
     .then(assets => {
 
