@@ -75,7 +75,7 @@ export default function Minimap(play, ctx, bs) {
     let vFWidth = tileSizeX / scaleMinimap,
         vFHeight = tileSizeY / scaleMinimap;
 
-    let vFX = viewFrame[0] * tileSizeX,
+    let vFX = (viewFrame[0] + 10) * tileSizeX,
         vFY = viewFrame[1] * tileSizeY;
 
     dViewFrame.position.set(bO[0] + mO[0] + vFX, bO[1] + mO[0] + vFY);
