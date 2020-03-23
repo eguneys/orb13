@@ -1,6 +1,35 @@
 import { objForeach, objMap } from './util2';
 import * as v from './vec2';
 
+const bitmaskTextureKey = (roles, role) => {
+  if (roles.n !== role) {
+    if (roles.e !== role) {
+      return 'nw';
+    } else if (roles.w !== role) {
+      return 'sw';
+    } else {
+      return 'w';
+    }
+  }
+  if (roles.s !== role) {
+    if (roles.e !== role) {
+      return 'ne';
+    } else if (roles.w !== role) {
+      return 'se';
+    } else {
+      return 'e';
+    }
+  }
+  if (roles.e !== role) {
+    return 'n';
+  }
+  if (roles.w !== role) {
+    return 's';
+  }
+
+  return 'm';
+};
+
 export default function Disciples() {
 
   this.width = 64;
@@ -10,8 +39,7 @@ export default function Disciples() {
     Map.main
   ];
 
-  let tiles,
-      tiles2;
+  let tiles;
 
   let nbW,
       nbH;
@@ -19,7 +47,6 @@ export default function Disciples() {
   this.init = (data) => {
     let map = data.map;
     tiles = readMap(maps[map]);
-    tiles2 = readMap2(maps[map]);
   };
 
 
@@ -47,32 +74,7 @@ export default function Disciples() {
   this.getBitmaskTextureKey = (role, neighbors) => {
     let roles = objMap(neighbors, (_, n) => n && this.getRoleByTile(n));
 
-    if (roles.n !== role) {
-      if (roles.e !== role) {
-        return 'nw';
-      } else if (roles.w !== role) {
-        return 'sw';
-      } else {
-        return 'w';
-      }
-    }
-    if (roles.s !== role) {
-      if (roles.e !== role) {
-        return 'ne';
-      } else if (roles.w !== role) {
-        return 'se';
-      } else {
-        return 'e';
-      }
-    }
-    if (roles.e !== role) {
-      return 'n';
-    }
-    if (roles.w !== role) {
-      return 's';
-    }
-
-    return 'm';
+    return bitmaskTextureKey(roles, role);
   };
 
   this.each = fn => {
@@ -99,11 +101,10 @@ export default function Disciples() {
         }
       }
     }
-    return res;    
+    return res;
   };
 
   const readMap = makeMapReader(makeRole);
-  const readMap2 = makeMapReader(makeRole2);
 
 }
 
@@ -122,11 +123,7 @@ const Role = {
 const RoleCode = {
   '.': 'GROUND',
   '~': 'WATER',
-  'm': 'GROUND'
-};
-
-const RoleCode2 = {
-  'm': 'MOUNTAIN'  
+  'm': 'MOUNTAIN'
 };
 
 function roleMaker(Role, RoleCode) {
@@ -150,7 +147,6 @@ function roleMaker(Role, RoleCode) {
 }
 
 const makeRole = roleMaker(Role, RoleCode);
-const makeRole2 = roleMaker(Role, RoleCode2);
 
 const Map = {
   'main': `

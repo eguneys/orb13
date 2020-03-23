@@ -1,5 +1,7 @@
 import { sprite } from '../asprite';
 
+import { makeFrameByRoleMini } from './util';
+
 export default function Minimap(play, ctx, bs) {
 
   const { frames, layers: { zeroLayer, oneLayer, twoLayer } } = ctx;
@@ -29,24 +31,14 @@ export default function Minimap(play, ctx, bs) {
   let dMap,
       dViewFrame;
 
+  let frameByRole;
+
   let disciples;
-
-  const frameByRole = {
-    'WATER': (pos) => {
-      let waterBitmask = frames['waterBitmask'];
-
-      let nS = disciples.getNeighbors(pos);
-      let bitmaskKey = disciples.getBitmaskTextureKey('WATER', nS);
-
-      return waterBitmask[bitmaskKey];
-    },
-    'GROUND': () => {
-      return frames['earth'];
-    }
-  };
 
   this.init = data => {
     disciples = data.disciples;
+
+    frameByRole = makeFrameByRoleMini(frames, disciples);
 
     tileSizeY = (width - 30 * 2.0) / disciples.width;
     tileSizeX = tileSizeY * 1.2;
@@ -75,7 +67,7 @@ export default function Minimap(play, ctx, bs) {
     let vFWidth = tileSizeX / scaleMinimap,
         vFHeight = tileSizeY / scaleMinimap;
 
-    let vFX = (viewFrame[0] + 10) * tileSizeX,
+    let vFX = (viewFrame[0] + 5) * tileSizeX,
         vFY = viewFrame[1] * tileSizeY;
 
     dViewFrame.position.set(bO[0] + mO[0] + vFX, bO[1] + mO[0] + vFY);

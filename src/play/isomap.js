@@ -5,6 +5,8 @@ import Viewport from '../viewport';
 import * as v from '../vec2';
 import Pool from 'poolf';
 
+import { makeFrameByRole } from './util';
+
 export default function Map(play, ctx, bs) {
 
   const { canvas, 
@@ -12,21 +14,9 @@ export default function Map(play, ctx, bs) {
           layers: { scene, zeroLayer }, 
           frames } = ctx;
 
+  let frameByRole;
+
   let disciples;
-
-  const frameByRole = {
-    'WATER': (item) => {
-      let waterBitmask = frames['isobitmaskWater'];
-
-      let nS = disciples.getNeighbors(item.pos);
-      let bitmaskKey = disciples.getBitmaskTextureKey('WATER', nS);
-
-      return waterBitmask[bitmaskKey];
-    },
-    'GROUND': () => {
-      return frames['isoearth'];
-    }
-  };
 
   let tileSize = bs.tileSize,
       halfTileSize = tileSize * 0.5;
@@ -66,7 +56,7 @@ export default function Map(play, ctx, bs) {
 
       let { tile: { role } } = item;
 
-      let frame = frameByRole[role](item);
+      let frame = frameByRole[role](item.pos);
 
       sp.frame = frame;
 
@@ -86,6 +76,8 @@ export default function Map(play, ctx, bs) {
 
   this.init = data => {
     disciples = data.disciples;
+
+    frameByRole = makeFrameByRole(frames, disciples);
 
     disciples.each((pos, tile) => {
       viewport0.addChild({
