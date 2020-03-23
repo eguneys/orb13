@@ -13,7 +13,7 @@ export default function Borders(play, ctx, bs) {
     dBorderTop.width = bs.bBottom.width;
     dBorderTop.height = bs.bBottom.height;
 
-    let dBorderLeft = sprite(frames['borderTop']);
+    let dBorderLeft = sprite(frames['borderLeft']);
     dBorderLeft.width = bs.bLeft.width;
     dBorderLeft.height = bs.bLeft.height;
     dBorderLeft.position.set(bs.bLeft.x, bs.bLeft.y);

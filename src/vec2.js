@@ -112,3 +112,7 @@ export function csub(v0, v1) {
 export function cadd(v0, v1) {
   return add(copy(v0), v1);
 }
+
+export function cmul(v0, v1) {
+  return mul(copy(v0), v1);
+}

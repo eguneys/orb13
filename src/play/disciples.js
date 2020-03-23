@@ -1,13 +1,13 @@
 import { sprite } from '../asprite';
 
 import Disciples from '../disciples';
-import Map from './map';
+import IsoMap from './isomap';
 import Minimap from './minimap';
 import Borders from './borders';
 
 export default function DisciplesView(play, ctx, bs) {
 
-  let dMap = new Map(this, ctx, bs);
+  let dIsoMap = new IsoMap(this, ctx, bs);
   let dMini = new Minimap(this, ctx, bs);
   let dBorders = new Borders(this, ctx, bs);
 
@@ -15,23 +15,23 @@ export default function DisciplesView(play, ctx, bs) {
     let disciples = new Disciples();
     disciples.init({map: 0 });
 
-    dMap.init({disciples});
+    dIsoMap.init({disciples});
     dMini.init({disciples});
 
     dBorders.init({});
 
   };
 
-  this.viewFrame = () => dMap.viewFrame();
+  this.viewFrame = () => dIsoMap.viewFrame();
 
   this.update = delta => {
-    dMap.update(delta);
+    dIsoMap.update(delta);
     dMini.update(delta);
     dBorders.update(delta);
   };
 
   this.render = () => {
-    dMap.render();
+    dIsoMap.render();
     dMini.render();
     dBorders.render();
   };

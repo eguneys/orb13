@@ -11,7 +11,7 @@ export default function Play(ctx) {
   const bs = (() => {
     const { width, height } = canvas;
 
-    let tileSize = 20;
+    let tileSize = 40;
 
     let bTop = rect(
       0, 0,
@@ -33,15 +33,15 @@ export default function Play(ctx) {
       height - bBottomHeight
     );
 
-    let disciplesWidth = width * 0.8,
-        disciplesHeight = height * 0.8,
+    let disciplesWidth = width - bLeft.width,
+        disciplesHeight = height - bBottomHeight,
         disciplesX = bLeft.x1,
         disciplesY = bTop.y1,
         disciplesArea = rect(disciplesX, disciplesY, 
                              disciplesWidth, disciplesHeight);
 
     let miniWidth = width * 0.3,
-        miniHeight = miniWidth,
+        miniHeight = miniWidth * 0.8,
         miniX = width - miniWidth,
         miniY = disciplesY,
         miniArea = rect(miniX, miniY, miniWidth, miniHeight);

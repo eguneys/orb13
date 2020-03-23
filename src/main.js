@@ -13,6 +13,7 @@ export function app(element, options) {
   let assetsUrl = 'assets/images/';
 
   new Assets({
+    'isos': 'disiso.png',
     'tiles': 'disciples.png',
     'minimap': 'minimap.png',
     'bordertop': 'disciplesBordertop.png'

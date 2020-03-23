@@ -63,20 +63,20 @@ export default function Viewport({
 
   this.drag = (v1, scale = 1) => {
     v.setScale(dragDeltaBuffer, v1, -scale);
-    return this;
   };
 
-  this.commitDrag = (limits) => {
+  this.commitDrag = () => {
     v.add(dragDelta, dragDeltaBuffer);
     v.scale(dragDeltaBuffer, 0);
+  };
 
-    if (limits) {
-      v.limit(dragDelta, limits);
-    }
+  this.undoDrag = () => {
+    v.scale(dragDeltaBuffer, 0);
   };
 
   const viewFrame = () => {
     let sourcePos = v.cadd(viewDelta, dragDelta);
+    v.add(sourcePos, dragDeltaBuffer);
 
     let [x, y] = sourcePos;
     let [w, h] = vBounds;
